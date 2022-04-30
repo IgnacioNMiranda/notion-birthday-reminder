@@ -1,34 +1,33 @@
+# Notion Birthday Reminder
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a2b1ede5-1da9-4507-b9be-c297c236b3cc/deploy-status)](https://app.netlify.com/sites/notion-birthday-reminder/deploys)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+It uses Twilio and Notion APIs in order to retrieve birthday data from a Notion database and, considering the current day, send a whatsapp message saying whose birthday is.
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies with `yarn`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+2. Run the development server using `yarn dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Open [http://localhost:3000](http://localhost:3000) to see placeholder page.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+This project has a `/api/birthday-reminder` GET endpoint, it retrieves data and send whatsapp messages.
 
-To learn more about Next.js, take a look at the following resources:
+You also need to configure a secret in order to bypass the security header `x-birthday-secret`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Additional Information
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This app is deployed on [Netlify](https://notion-birthday-reminder.netlify.app/) and has a Google Scheduler cronjob attached to it. This cronjob is executed everyday in order to update the whatsapp birthday reminder of your loved people (:
 
-## Deploy on Vercel
+### License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[MIT](LICENSE)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### About me
+
+[Linkedin](https://www.linkedin.com/in/ignacio-miranda-figueroa/)
