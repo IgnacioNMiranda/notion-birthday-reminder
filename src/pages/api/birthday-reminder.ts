@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Client } from '@notionhq/client'
 import { environment } from 'config/environment'
+import { notionClient, twilioClient } from 'services'
 
 enum HttpStatus {
   INTERNAL_SERVER_ERROR = 500,
   OK = 200,
-  FORBIDDEN = 401,
+  UNAUTHORIZED = 401,
 }
 
 type BirthdayPerson = {
@@ -14,7 +14,15 @@ type BirthdayPerson = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const notionClient = new Client({ auth: environment.notion.key })
+  if (
+    req.method !== 'GET' ||
+    !req.headers['x-birthday-secret'] ||
+    req.headers['x-birthday-secret'] !== environment.birthdaySecret
+  ) {
+    const status = HttpStatus.UNAUTHORIZED
+    return res.status(status).json({ status, message: 'You are not authorized to perform this action' })
+  }
+
   const todayDate = new Date()
   const todayDateString = `${todayDate.getUTCDate()}/${todayDate.getUTCMonth() + 1}`
 
@@ -46,6 +54,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     })
 
     if (birthdayPeopleMessages.length) message = 'We have the following birthdays today:'
+
+    const messagesBuilder = birthdayPeopleMessages.map(async ({ name, newAge }) => {
+      await twilioClient.messages.create({
+        body: `Your appointment is coming up on '${name}' at '${newAge} years'`,
+        from: environment.twilio.fromNumber,
+        to: environment.twilio.toNumber,
+      })
+    })
+    await Promise.all(messagesBuilder)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
