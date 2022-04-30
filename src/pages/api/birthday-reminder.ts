@@ -35,7 +35,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     query.results.forEach((result) => {
       if ('properties' in result) {
         const {
-          properties: { Age: notionAge, Name: notionName, 'Day of birth': notionDayOfBirth },
+          properties: {
+            [environment.notion.agePropertyKey]: notionAge,
+            [environment.notion.namePropertyKey]: notionName,
+            [environment.notion.dayOfBirthPropertyKey]: notionDayOfBirth,
+          },
         } = result
 
         let newAge = 0
