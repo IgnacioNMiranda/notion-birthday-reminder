@@ -4,7 +4,7 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-It uses Twilio and Notion APIs in order to retrieve birthday data from a Notion database and, considering the current day, send a whatsapp message saying whose birthday is.
+It uses Twilio and Notion APIs in order to retrieve birthday data from a Notion database and, considering the current day, send a text message saying whose birthday is.
 
 ## Getting Started
 
@@ -16,13 +16,13 @@ Open [http://localhost:3000](http://localhost:3000) to see placeholder page.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-This project has a `/api/birthday-reminder` GET endpoint, it retrieves data and send whatsapp messages.
+This project has a `/api/birthday-reminder` GET endpoint, it retrieves data and send text messages.
 
 You also need to configure a secret in order to bypass the security header `x-birthday-secret`.
 
 ## Additional Information
 
-This app is deployed on [Netlify](https://notion-birthday-reminder.netlify.app/) and has a Google Scheduler cronjob attached to it. This cronjob is executed everyday in order to update the whatsapp birthday reminder of your loved people (:
+This app is deployed on [Netlify](https://notion-birthday-reminder.netlify.app/) and has a Google Scheduler cronjob attached to it. This cronjob is executed everyday in order to update the birthday reminder of your loved people (:
 
 ### License
 

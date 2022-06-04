@@ -26,8 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const todayDate = new Date()
   const todayDateString = `${todayDate.getUTCDate()}/${todayDate.getUTCMonth() + 1}`
 
-  let message = 'We do not have to celebrate birthdays today'
-  const birthdayPeopleMessages: BirthdayPerson[] = []
+  const birthdayPeople: BirthdayPerson[] = []
 
   try {
     const query = await notionClient.databases.query({ database_id: environment.notion.databaseId })
@@ -52,31 +51,33 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const notionDayOfBirthString = `${dayOfBirthDate.getUTCDate()}/${dayOfBirthDate.getUTCMonth() + 1}`
         if (notionDayOfBirthString === todayDateString) {
-          birthdayPeopleMessages.push({ name, newAge })
+          birthdayPeople.push({ name, newAge })
         }
       }
     })
 
-    if (birthdayPeopleMessages.length) message = 'We have the following birthdays today:'
-
-    const messagesBuilder = birthdayPeopleMessages.map(async ({ name, newAge }) => {
+    if (birthdayPeople.length) {
+      const body = 'Birthdays\n' + birthdayPeople.map(({ name, newAge }) => `${name}: ${newAge} years`).join('\n')
       await twilioClient.messages.create({
-        body: `Your appointment is coming up on '${name}' at '${newAge} years'`,
+        body,
         from: environment.twilio.fromNumber,
         to: environment.twilio.toNumber,
       })
-    })
-    await Promise.all(messagesBuilder)
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
 
     const status = HttpStatus.INTERNAL_SERVER_ERROR
-    res.status(status).json({ status, message: 'An unexpected error occured.' })
+    return res.status(status).json({ status, message: 'An unexpected error occured.' })
   }
 
   const status = HttpStatus.OK
-  return res.status(status).json({ status, message, people: birthdayPeopleMessages })
+  return res.status(status).json({
+    status,
+    message: birthdayPeople.length ? 'We have birthdays today' : 'We do not have to celebrate birthdays today',
+    people: birthdayPeople,
+  })
 }
 
 export default handler
