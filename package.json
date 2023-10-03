@@ -1,6 +1,7 @@
 {
   "name": "birthday-reminder",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "packageManager": "pnpm@8.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,12 +13,13 @@
   "dependencies": {
     "@notionhq/client": "^1.0.4",
     "next": "12.1.5",
+    "nodemailer": "^6.9.5",
     "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "twilio": "^3.76.1"
+    "react-dom": "18.1.0"
   },
   "devDependencies": {
     "@types/node": "17.0.30",
+    "@types/nodemailer": "^6.4.11",
     "@types/react": "18.0.8",
     "@types/react-dom": "18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.21.0",

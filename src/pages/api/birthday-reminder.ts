@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { environment } from 'config/environment'
-import { notionClient, twilioClient } from 'services'
+import { notionClient, sendEmail } from 'services'
 
 enum HttpStatus {
   INTERNAL_SERVER_ERROR = 500,
@@ -58,11 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (birthdayPeople.length) {
       const body = 'Birthdays\n' + birthdayPeople.map(({ name, newAge }) => `${name}: ${newAge} years`).join('\n')
-      await twilioClient.messages.create({
-        body,
-        from: environment.twilio.fromNumber,
-        to: environment.twilio.toNumber,
-      })
+      await sendEmail(body)
     }
   } catch (error) {
     // eslint-disable-next-line no-console

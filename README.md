@@ -4,13 +4,13 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-It uses Twilio and Notion APIs in order to retrieve birthday data from a Notion database and, considering the current day, send a text message saying whose birthday is.
+It uses Nodemailer and Notion APIs in order to retrieve birthday data from a Notion database and, considering the current day, send an email saying whose birthday is.
 
 ## Getting Started
 
-1. Install dependencies with `yarn`
+1. Install dependencies with `pnpm`
 
-2. Run the development server using `yarn dev`
+2. Run the development server using `pnpm dev`
 
 Open [http://localhost:3000](http://localhost:3000) to see placeholder page.
 

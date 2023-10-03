@@ -1,2 +1,2 @@
 export * from './notion'
-export * from './twilio'
+export * from './email'
